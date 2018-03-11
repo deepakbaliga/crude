@@ -16,8 +16,6 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
         
         // Attempt to execute the prepared statement
         if($stmt->execute()){
-
-            
             if($stmt->rowCount() == 1){
                 /* Fetch result row as an associative array. Since the result set
                 contains only one row, we don't need to use while loop */
@@ -25,8 +23,47 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                 
                 // Retrieve individual field value
                 $name = $row["name"];
-                $address = $row["address"];
                 $salary = $row["salary"];
+                $email = $row["email"];
+
+
+
+    $sql_salary = "INSERT INTO salary (employee_id, name, salary, date) VALUES (:employee_id, :name, :salary, :date)";
+ 
+        if($stm = $pdo->prepare($sql_salary)){
+            // Bind variables to the prepared statement as parameters
+            $stm->bindParam(':employee_id', $param_id_);
+            $stm->bindParam(':name', $name);
+            $stm->bindParam(':salary', $salary);
+            $stm->bindParam(':date', $param_date);
+
+            $param_id_ = $param_id;
+            $param_name = $name;
+            $param_salary = $salary;
+            $param_date = date("Y-m-d h:i:sa");
+
+         
+            
+            
+            // Attempt to execute the prepared statement
+            if($stm->execute()){
+
+                mail($email, "Salary Slip ".date("Y-m-d h:i:sa"), "Hello ".$name.",\n Salary of ".$salary." euros have been credited to your account. \n\n Thanks and regards,");
+            } else{
+                echo "Something went wrong. Please try again later.";
+            }
+        }
+         
+        // Close statement
+        unset($stm);
+
+
+
+
+
+
+
+
             } else{
                 // URL doesn't contain valid id parameter. Redirect to error page
                 header("location: error.php");
@@ -43,6 +80,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     
     // Close connection
     unset($pdo);
+    
 } else{
     // URL doesn't contain id parameter. Redirect to error page
     header("location: error.php");
@@ -68,16 +106,13 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h1>View Record</h1>
+                        <h1>Salary Paid </h1>
                     </div>
                     <div class="form-group">
                         <label>Name</label>
                         <p class="form-control-static"><?php echo $row["name"]; ?></p>
                     </div>
-                    <div class="form-group">
-                        <label>Address</label>
-                        <p class="form-control-static"><?php echo $row["address"]; ?></p>
-                    </div>
+    
                     <div class="form-group">
                         <label>Salary</label>
                         <p class="form-control-static"><?php echo $row["salary"]; ?></p>

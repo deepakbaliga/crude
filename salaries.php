@@ -26,6 +26,8 @@
             $('[data-toggle="tooltip"]').tooltip();   
 
 
+            $('#datatab').DataTable();
+
             
 
         });
@@ -35,13 +37,17 @@
 
 <section class="text">
                 
-                <h1><span class="fontawesome-star star"></span> <span>Employee Records</span> <span class="fontawesome-star star"></span></h1>
+                <h1><span class="fontawesome-star star"></span> <span>Salary Slips</span> <span class="fontawesome-star star"></span></h1>
 </section>
 
 
+
     <div class="wrapper">
+
+    
         <div class="container-fluid">
             <div class="row">
+                
                 <div class="col-md-12">
                     <div class="page-header clearfix">
                         <br>
@@ -50,56 +56,41 @@
                         <br>
                         <br>
                         
-                        <a href="create.php" class="btn btn-success pull-right">Add New Employee</a>
-
-    <br>    <br>    <br>    
-
-                        <!-- <a href="bulk.html" class="btn btn-success pull-right">Bulk Upload</a> -->
-                        
-                        
                         
                     </div>
-                    
-
-                    
                     <?php
                     // Include config file
                     require_once 'config.php';
                     
                     // Attempt select query execution
-                    $sql = "SELECT * FROM employees";
+                    $sql = "SELECT * FROM salary";
                     if($result = $pdo->query($sql)){
                         if($result->rowCount() > 0){
                             echo "<table id='datatab' class='table table-striped table-bordered table-hover' cellspacing='0' width='100%'>";
                                 echo "<thead>";
                                     echo "<tr>";
-                                        echo "<th>#</th>";
-                                        echo "<th>Name</th>";
-                                        echo "<th>Address</th>";
+                                        
+                                        echo "<th>Payment ID</th>";
+                                        echo "<th>Employee ID</th>";
+                                        echo "<th>Employee Name</th>";
                                         echo "<th>Salary</th>";
-                                        echo "<th>Action</th>";
+                                        echo "<th>Date</th>";
+                                        
                                     echo "</tr>";
                                 echo "</thead>";
                                 echo "<tbody>";
                                 while($row = $result->fetch()){
                                     echo "<tr>";
                                         echo "<td>" . $row['id'] . "</td>";
+                                        echo "<td>" . $row['employee_id'] . "</td>";
                                         echo "<td>" . $row['name'] . "</td>";
-                                        echo "<td>" . $row['address'] . "</td>";
                                         echo "<td>" . $row['salary'] . "</td>";
-                                        echo "<td>";
-                                            echo "<a href='read.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                                            echo "<a href='paysalary.php?id=". $row['id'] ."' title='Pay Salary' data-toggle='tooltip'><span class='glyphicon glyphicon-euro'></span></a>";
-                                            echo "<a href='update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                                            echo "<a href='delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-                                            
-                                        echo "</td>";
+                                        echo "<td>" . $row['date'] . "</td>";
+                                        
                                     echo "</tr>";
                                 }
                                 echo "</tbody>";                            
                             echo "</table>";
-
-                            
                             // Free result set
                             unset($result);
                         } else{
@@ -113,28 +104,20 @@
                     unset($pdo);
                     ?>
                 </div>
-
-                <a href="salaries.php" class="btn btn-success pull-right">Salary Slips</a>
             </div>        
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/dataTables.bootstrap.min.js"></script>
 
-
-
-
-    <script>
+<script>
 
 $(document).ready(function() {
 $('#datatab').DataTable();
 });
 </script>
-
-
-
 
 </body>
 </html>

@@ -3,8 +3,8 @@
 require_once 'config.php';
  
 // Define variables and initialize with empty values
-$name = $address = $salary = "";
-$name_err = $address_err = $salary_err = "";
+$name = $address = $salary = $email="";
+$name_err = $address_err = $salary_err  =  $email_err = "";
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -35,22 +35,37 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     } else{
         $salary = $input_salary;
     }
+
+
+
+    // Validate email
+    $input_email = trim($_POST["email"]);
+    if(empty($input_email)){
+        $email_err = "Please enter a valid email";     
+    } else{
+        $email = $input_email;
+    }
+
+
+
     
     // Check input errors before inserting in database
-    if(empty($name_err) && empty($address_err) && empty($salary_err)){
+    if(empty($name_err) && empty($address_err) && empty($salary_err) && empty($email_err)){
         // Prepare an insert statement
-        $sql = "INSERT INTO employees (name, address, salary) VALUES (:name, :address, :salary)";
+        $sql = "INSERT INTO employees (name, address, salary, email) VALUES (:name, :address, :salary, :email)";
  
         if($stmt = $pdo->prepare($sql)){
             // Bind variables to the prepared statement as parameters
             $stmt->bindParam(':name', $param_name);
             $stmt->bindParam(':address', $param_address);
             $stmt->bindParam(':salary', $param_salary);
+            $stmt->bindParam(':email', $param_email);
             
             // Set parameters
             $param_name = $name;
             $param_address = $address;
             $param_salary = $salary;
+            $param_email = $email;
             
             // Attempt to execute the prepared statement
             if($stmt->execute()){
@@ -77,6 +92,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <meta charset="UTF-8">
     <title>Create Record</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+    <link rel="stylesheet" href="login.css">
     <style type="text/css">
         .wrapper{
             width: 500px;
@@ -85,12 +101,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </style>
 </head>
 <body>
+
+<section class="text">
+                
+                <h1><span class="fontawesome-star star"></span> <span>Add New Employee</span> <span class="fontawesome-star star"></span></h1>
+
+                
+</section>
+
     <div class="wrapper">
         <div class="container-fluid">
+
+        
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h2>Create Record</h2>
+                    <br><br><br><br><br>
                     </div>
                     <p>Please fill this form and submit to add employee record to the database.</p>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
@@ -99,11 +125,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <input type="text" name="name" class="form-control" value="<?php echo $name; ?>">
                             <span class="help-block"><?php echo $name_err;?></span>
                         </div>
+
+                        <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
+                            <label>Email</label>
+                            <input type="text" name="email" class="form-control"  value="<?php echo $email; ?>">
+                            <span class="help-block"><?php echo $email_err;?></span>
+                        </div>
+
+
                         <div class="form-group <?php echo (!empty($address_err)) ? 'has-error' : ''; ?>">
                             <label>Address</label>
                             <textarea name="address" class="form-control"><?php echo $address; ?></textarea>
                             <span class="help-block"><?php echo $address_err;?></span>
                         </div>
+                        
+                        
+                        
+                        
+
                         <div class="form-group <?php echo (!empty($salary_err)) ? 'has-error' : ''; ?>">
                             <label>Salary</label>
                             <input type="text" name="salary" class="form-control" value="<?php echo $salary; ?>">

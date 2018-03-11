@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+
+    <link rel="stylesheet" href="login.css">
+
+    <style type="text/css">
+        .wrapper{
+            width: 650px;
+            margin: 0 auto;
+        }
+        .page-header h2{
+            margin-top: 0;
+        }
+        table tr td:last-child a{
+            margin-right: 15px;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();   
+
+
+            
+
+        });
+    </script>
+</head>
+<body>
+
+<section class="text">
+                
+                <h1><span class="fontawesome-star star"></span> <span>Bulk Upload Employee Records</span> <span class="fontawesome-star star"></span></h1>
+</section>
+
+
+    <div class="wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-header clearfix">
+                        
+                        <br><br><br><br>
+                        
+                        <blockquote>
+                                <p>Upload employees in bulk</p>
+
+                                <form action="bulk.php" method="post" enctype="multipart/form-data">
+                                    <label class="btn btn-default" >
+                                            Browse <input type="file" name="file" accept=".json">
+                                        </label>
+                                    <input type="submit" value="Upload" name="submit">
+                                </form>
+
+
+
+                                
+
+
+                                <footer>Only works with JSON files</footer>
+                              </blockquote>
+                        
+                        
+                    </div>
+                    
+
+                    
+                    
+                </div>
+
+                
+            </div>        
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/dataTables.bootstrap.min.js"></script>
+
+
+
+
+    <script>
+
+$(document).ready(function() {
+$('#datatab').DataTable();
+});
+</script>
+
+
+
+
+</body>
+</html>
