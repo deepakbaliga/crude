@@ -65,6 +65,8 @@
                     // Attempt select query execution
                     $sql = "SELECT * FROM salary";
                     if($result = $pdo->query($sql)){
+
+                        //Bootstrap data table has been used to achive the following
                         if($result->rowCount() > 0){
                             echo "<table id='datatab' class='table table-striped table-bordered table-hover' cellspacing='0' width='100%'>";
                                 echo "<thead>";

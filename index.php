@@ -35,6 +35,8 @@
 
 <section class="text">
                 
+
+                <!-- Reference: https://codepen.io/ikevin/pen/iGyjk?limit=all&page=6&q=title -->
                 <h1><span class="fontawesome-star star"></span> <span>Employee Records</span> <span class="fontawesome-star star"></span></h1>
 </section>
 
@@ -70,6 +72,11 @@
                     $sql = "SELECT * FROM employees";
                     if($result = $pdo->query($sql)){
                         if($result->rowCount() > 0){
+
+
+                            // Reference: https://datatables.net/manual/styling/bootstrap
+
+                            //The bootstrap data tables help in sorting, searching and filtering the data in the table
                             echo "<table id='datatab' class='table table-striped table-bordered table-hover' cellspacing='0' width='100%'>";
                                 echo "<thead>";
                                     echo "<tr>";

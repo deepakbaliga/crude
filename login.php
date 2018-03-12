@@ -21,7 +21,7 @@ if(!empty($email) && !empty($password)){
     
 
 
-    // Prepare an insert statement
+    // Prepare an select statement
     $sql = "SELECT * FROM users where email= :email and password = :password";
 
     
